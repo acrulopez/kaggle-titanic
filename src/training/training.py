@@ -9,11 +9,11 @@ from utils import set_seed, split_x_y
 
 @set_seed
 def train_logit(df, formula=LOGIT_FORMULA):
-    """Perform the pre-established feature engineering on the
-    provided dataframe
+    """Train a dataset with a support vector classifier
 
     Args:
         df (pandas.DataFrame): dataframe containing the dataset
+        formula (str): formula to apply to the split x-y
 
     Returns:
         model: the model
@@ -33,6 +33,19 @@ def train_logit(df, formula=LOGIT_FORMULA):
 
 @set_seed
 def train_svc(df, kernel="poly", features=[2, 3], gamma=3, formula=SVC_RF_FORMULA):
+    """Train a dataset with a logistic regression algorithm
+
+    Args:
+        df (pandas.DataFrame): dataframe containing the dataset
+        kernel (str, optional): kernel to apply to the svc. Defaults to "poly".
+        features (list, optional): features to use on the model. Defaults to [2, 3].
+        gamma (int, optional): gamma to apply to the svc. Defaults to 3.
+        formula (str): formula to apply to the split x-y
+
+    Returns:
+        model: the model
+    """
+
     y, x = split_x_y(df, formula)
     X = np.asarray(x)
     y = np.asarray(y)
@@ -52,6 +65,15 @@ def train_svc(df, kernel="poly", features=[2, 3], gamma=3, formula=SVC_RF_FORMUL
 
 @set_seed
 def train_random_forest(df, formula=SVC_RF_FORMULA):
+    """Train a dataset with the random forest algorithm
+
+    Args:
+        df (pandas.DataFrame): dataframe containing the dataset
+        formula (str): formula to apply to the split x-y
+
+    Returns:
+        model: the model
+    """
     y, x = split_x_y(df, formula)
     # RandomForestClassifier expects a 1 demensional NumPy array, so we convert
     y = np.asarray(y).ravel()
